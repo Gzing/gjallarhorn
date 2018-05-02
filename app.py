@@ -5,8 +5,9 @@ from flask_cors import CORS
 import sendgrid
 from sendgrid.helpers.mail import *
 import tldextract
+from dotenv import load_dotenv
 
-
+load_dotenv()
 app = Flask(__name__)
 CORS(app)
 
@@ -17,10 +18,11 @@ BLANK_IMG = b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\xff\xff\xff\x
 @app.route('/<filename>', methods=['GET'])
 def index(filename=None):
     referer = request.headers.get('referer')
+
     if referer:
         extract = tldextract.extract(referer)
-        extract = extract.fqdn or extract.ipv4
-        if extract not in os.environ['WHITELIST_DOMAINS'].split(','):
+        extract = extract.registered_domain or extract.ipv4
+        if extract and extract not in os.environ['WHITELIST_DOMAINS'].split(','):
             try:
                 sg = sendgrid.SendGridAPIClient(apikey=os.environ['SENDGRID_KEY'])
                 from_email = Email(os.environ['FROM_EMAIL'])

@@ -1,0 +1,33 @@
+{
+  "name": "Gjallarhorn",
+  "description": "Serve icons",
+  "repository": "https://github.com/Gzing/gjallarhorn",
+  "logo": "https://avatars3.githubusercontent.com/u/2235865?s=460&v=4",
+  "success_url": "/",
+  "env": {
+    "WHITELIST_DOMAINS": {
+      "description": "Domain list split by commas 'google.com,yahoo.com,localhost,127.0.0.1'",
+      "required": true
+    },
+    "SENDGRID_KEY": {
+      "description": "SendGrid key to enable emails)",
+      "required": true
+    },
+    "FROM_EMAIL": {
+      "description": "Email notifications will be sent from this address",
+      "required": true
+    },
+    "TO_EMAIL": {
+      "description": "Email notifications will be sent to this address",
+      "required": true
+    },
+    "EMAIL_SUBJECT": {
+      "description": "Subject of the email)",
+      "required": true
+    }
+  },
+  "buildpacks": [{
+      "url": "heroku/python"
+    }
+  ]
+}
